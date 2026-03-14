@@ -1,0 +1,50 @@
+[
+    {
+        "voter_id": "CS001",
+        "candidate": "Alice",
+        "time": "2026-02-10 21:02:41.954462",
+        "hash": "477278544c39142c7863a515fdca81d9f36e521bedb6f9e8fbd6b977e8c56193"
+    },
+    {
+        "voter_id": "CS002",
+        "candidate": "Bob",
+        "time": "2026-02-10 22:49:00.727322",
+        "hash": "455a8ee53f37acce2247ea9a69002785ce21815cd8f4f4c5d3544f3ea7367d46"
+    },
+    {
+        "voter_id": "CS003",
+        "candidate": "Charlie",
+        "time": "2026-02-10 22:58:44.176068",
+        "hash": "28b7f585157571b9724be79bcac16c7101e23157a9b504ccf313ee50ac74c090"
+    },
+    {
+        "voter_id": "CS004",
+        "candidate": "Charlie",
+        "time": "2026-02-10 23:02:45.034256",
+        "hash": "f3748b100ae976f7c73ab0af5a87b31ddadc7ed8ce3e0723eb9f8616b2c7497c"
+    },
+    {
+        "voter_id": "CS005",
+        "candidate": "Alice",
+        "time": "2026-02-10 23:11:23.842853",
+        "hash": "7075c5fb3f751681ba3ec992554818c7f8752ab739a8828512f6a5947491250a"
+    },
+    {
+        "voter_id": "CS006",
+        "candidate": "Charlie",
+        "time": "2026-02-11 14:27:46.884786",
+        "hash": "475af1cc904087f41f557e20c7f23221fb64a9bd40975c8d7b7aa48e40adbf07"
+    },
+    {
+        "voter_id": "CS007",
+        "candidate": "Alice",
+        "time": "2026-02-12 15:51:01.521069",
+        "hash": "b06fcca8ac86df997c254f40169b33a89a283f613d5dc2380c6ae12023b2a11e"
+    },
+    {
+        "voter_id": "CS008",
+        "candidate": "Charlie",
+        "time": "2026-02-12 15:52:52.369674",
+        "hash": "aba66cd79d190fa59f4291c44987d5b481b8c8f364cfaaf84bd9376601d73ed8"
+    }
+]

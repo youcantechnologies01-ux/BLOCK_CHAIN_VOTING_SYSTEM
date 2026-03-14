@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 250" fill="none">
+    <defs>
+        <!-- Blue Energy Gradient -->
+        <linearGradient id="energyGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#00e5ff;stop-opacity:1" /> <!-- Cyan -->
+            <stop offset="100%" style="stop-color:#2979ff;stop-opacity:1" /> <!-- Blue -->
+        </linearGradient>
+
+        <!-- Particle Pattern for Runner Body -->
+        <pattern id="particlePattern" x="0" y="0" width="4" height="4" patternUnits="userSpaceOnUse">
+            <rect x="0" y="0" width="4" height="4" fill="#000" opacity="0"/> 
+            <circle cx="2" cy="2" r="1.5" fill="url(#energyGrad)" opacity="0.9"/>
+        </pattern>
+
+        <!-- Glow Filter -->
+        <filter id="blueGlow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+            <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+        </filter>
+        
+        <!-- Platform Gradient -->
+        <radialGradient id="platformGrad" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+            <stop offset="0%" style="stop-color:#00e5ff;stop-opacity:0.8"/>
+            <stop offset="100%" style="stop-color:#00e5ff;stop-opacity:0"/>
+        </radialGradient>
+    </defs>
+
+    <!-- HOLOGRAPHIC PLATFORM RINGS -->
+    <g transform="translate(150, 210) scale(1, 0.3)">
+        <!-- Concentric Ripples -->
+        <ellipse cx="0" cy="0" rx="120" ry="120" stroke="#2979ff" stroke-width="2" fill="none" opacity="0.6">
+            <animate attributeName="rx" values="120;130;120" dur="3s" repeatCount="indefinite"/>
+            <animate attributeName="ry" values="120;130;120" dur="3s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0.6;0;0.6" dur="3s" repeatCount="indefinite"/>
+        </ellipse>
+        <ellipse cx="0" cy="0" rx="90" ry="90" stroke="#00e5ff" stroke-width="3" fill="none" opacity="0.8">
+             <animate attributeName="stroke-width" values="1;3;1" dur="2s" repeatCount="indefinite"/>
+        </ellipse>
+        <ellipse cx="0" cy="0" rx="50" ry="50" stroke="#fff" stroke-width="2" fill="url(#platformGrad)" opacity="0.5"/>
+        
+        <!-- Light Beams shooting up -->
+        <path d="M-100 0 L-100 -200 M100 0 L100 -200" stroke="url(#energyGrad)" stroke-width="10" opacity="0">
+             <animate attributeName="opacity" values="0;0.2;0" dur="1.5s" repeatCount="indefinite"/>
+        </path>
+    </g>
+
+    <!-- BLUE PARTICLE RUNNER (Sprinting Right) -->
+    <g filter="url(#blueGlow)" transform="translate(80, 50)">
+        <!-- The silhouette path filled with dots -->
+        <path d="
+            M70 20 
+            C80 20 90 25 90 35 
+            C90 45 80 50 70 50 
+            C60 50 50 45 50 35 
+            C50 25 60 20 70 20 Z
+            
+            M65 55 
+            L85 55 
+            L80 100 
+            L50 90 Z
+            
+            M85 60 
+            L120 70 
+            L140 50 
+            
+            M65 60 
+            L30 80 
+            L40 100
+            
+            M80 100
+            L110 120
+            L140 90
+            
+            M50 90
+            L30 130
+            L10 110
+        " fill="url(#particlePattern)" stroke="url(#energyGrad)" stroke-width="1" stroke-opacity="0.5" />
+        
+        <!-- Speed Streaks (Trails) -->
+        <g opacity="0.7">
+             <path d="M40 50 L0 50" stroke="#00e5ff" stroke-width="2">
+                 <animate attributeName="d" values="M40 50 L0 50; M50 50 L20 50; M40 50 L0 50" dur="0.2s" repeatCount="indefinite"/>
+             </path>
+             <path d="M30 80 L-10 80" stroke="#2979ff" stroke-width="2">
+                 <animate attributeName="d" values="M30 80 L-10 80; M40 80 L10 80; M30 80 L-10 80" dur="0.3s" repeatCount="indefinite"/>
+             </path>
+             <path d="M40 110 L0 110" stroke="#00e5ff" stroke-width="3">
+                 <animate attributeName="d" values="M40 110 L0 110; M50 110 L20 110; M40 110 L0 110" dur="0.25s" repeatCount="indefinite"/>
+             </path>
+        </g>
+    </g>
+</svg>

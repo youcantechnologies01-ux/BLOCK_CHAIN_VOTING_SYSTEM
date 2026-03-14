@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Success - You Can Technologies</title>
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #000;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: white;
+        }
+
+        #successCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        #success-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            text-align: center;
+            z-index: 2;
+            opacity: 0;
+            transition: opacity 1s ease-out, transform 1s ease-out;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 242, 96, 0.3);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 30px rgba(0, 242, 96, 0.2);
+        }
+
+        #success-message.visible {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #00F260;
+            text-shadow: 0 0 10px rgba(0, 242, 96, 0.5);
+        }
+
+        p {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            color: #e0e0e0;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            color: #0f0c29;
+            background: linear-gradient(45deg, #00F260, #0575E6);
+            border: none;
+            border-radius: 50px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            font-weight: bold;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 242, 96, 0.4);
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="successCanvas"></canvas>
+
+    <div id="success-message">
+        <h1>✅ Success!</h1>
+        <p>{{ message }}</p>
+        <a href="{{ url_for('index') }}" class="btn">Return to Home</a>
+    </div>
+
+    <script src="{{ url_for('static', filename='success_anim.js') }}"></script>
+</body>
+
+</html>

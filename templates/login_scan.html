@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Sovereign Vote | Biometric Access</title>
+    <!-- Use a modern, tech-focused font -->
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00f260;
+            --secondary: #0575e6;
+            --accent: #ff00ff;
+            --bg-dark: #0f0c29;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            margin: 0;
+            overflow: hidden;
+            background-color: var(--bg-dark);
+            color: #fff;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #bgCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            /* Simple fallback gradient if canvas fails */
+            background: radial-gradient(circle at center, #1a2a6c, #b21f1f, #fdbb2d);
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+        }
+
+        .container {
+            position: relative;
+            perspective: 1000px;
+            z-index: 10;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+            text-align: center;
+            width: 450px;
+            transform-style: preserve-3d;
+            animation: float 6s ease-in-out infinite;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0) rotateX(0);
+            }
+
+            50% {
+                transform: translateY(-10px) rotateX(2deg);
+            }
+        }
+
+        h1 {
+            font-weight: 700;
+            font-size: 2.5rem;
+            margin-bottom: 5px;
+            background: linear-gradient(90deg, #fff, #00f260);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        p.subtitle {
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+        }
+
+        .scanner-frame {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            margin-bottom: 30px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(0, 242, 96, 0.1);
+            background: #000;
+        }
+
+        /* Corner markers for tech feel */
+        .corner {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--primary);
+            z-index: 5;
+            transition: all 0.3s ease;
+        }
+
+        .tl {
+            top: 10px;
+            left: 10px;
+            border-right: none;
+            border-bottom: none;
+        }
+
+        .tr {
+            top: 10px;
+            right: 10px;
+            border-left: none;
+            border-bottom: none;
+        }
+
+        .bl {
+            bottom: 10px;
+            left: 10px;
+            border-right: none;
+            border-top: none;
+        }
+
+        .br {
+            bottom: 10px;
+            right: 10px;
+            border-left: none;
+            border-top: none;
+        }
+
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.8;
+            filter: contrast(1.2) saturate(1.1);
+        }
+
+        /* Scanning Beam */
+        .scan-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, #00f260, #00f260, transparent);
+            box-shadow: 0 0 15px #00f260;
+            animation: scan 2.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+            z-index: 4;
+            opacity: 0.8;
+        }
+
+        @keyframes scan {
+            0% {
+                top: 0%;
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                top: 100%;
+                opacity: 0;
+            }
+        }
+
+        /* Input Styling */
+        .input-group {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        input {
+            width: 100%;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: #fff;
+            text-align: center;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.2rem;
+            letter-spacing: 3px;
+            transition: all 0.3s;
+            box-sizing: border-box;
+            /* Fix padding issue */
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(0, 242, 96, 0.2);
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        /* Buttons */
+        button {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-capture {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            margin-bottom: 15px;
+        }
+
+        .btn-capture:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .btn-submit {
+            background: linear-gradient(90deg, #00f260, #0575e6);
+            color: #fff;
+            box-shadow: 0 5px 20px rgba(0, 242, 96, 0.3);
+        }
+
+        .btn-submit::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: 0.5s;
+        }
+
+        .btn-submit:hover::before {
+            left: 100%;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(5, 117, 230, 0.4);
+        }
+
+        /* Reticle Overlay */
+        .reticle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 150px;
+            height: 150px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            box-shadow: 0 0 0 2000px rgba(0, 0, 0, 0.5);
+            /* Dim outside */
+            pointer-events: none;
+            z-index: 3;
+        }
+
+        .reticle::after {
+            content: '';
+            position: absolute;
+            top: -5px;
+            bottom: -5px;
+            left: -5px;
+            right: -5px;
+            border-radius: 50%;
+            border: 2px dashed var(--primary);
+            animation: spin 10s linear infinite;
+        }
+
+        @keyframes spin {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Background Canvas reused -->
+    <canvas id="bgCanvas"></canvas>
+
+    <div class="container">
+        <div class="card">
+            <h1>Identity Verify</h1>
+            <p class="subtitle">SECURE BIOMETRIC ACCESS</p>
+
+            <div class="scanner-frame">
+                <div class="corner tl"></div>
+                <div class="corner tr"></div>
+                <div class="corner bl"></div>
+                <div class="corner br"></div>
+
+                <div class="scan-line"></div>
+                <!-- Reticle forces focus on eyes -->
+                <div class="reticle"></div>
+
+                <video id="video" autoplay muted playsinline></video>
+            </div>
+
+            <button type="button" class="btn-capture" onclick="captureFrame()">Initialize Iris Scan</button>
+
+            <form id="loginForm" method="POST" style="margin-top: 20px;" onsubmit="return validateForm()">
+                <input type="hidden" name="eye_image" id="eye_image">
+                <div class="input-group">
+                    <input type="text" name="cs_id" placeholder="ENTER VOTER ID" required autocomplete="off">
+                </div>
+                <button type="submit" class="btn-submit">Authenticate Access</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Re-use the background script for consistency -->
+    <script src="{{ url_for('static', filename='vote_bg.js') }}"></script>
+
+    <script>
+        const video = document.getElementById('video');
+
+        // Access webcam
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(stream => { video.srcObject = stream; })
+            .catch(err => console.error("Webcam error: ", err));
+
+        // Capture frame
+        function captureFrame() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 400;
+            canvas.height = 300;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+            const dataURL = canvas.toDataURL('image/png', 0.8);
+            document.getElementById('eye_image').value = dataURL;
+
+            // Tech feedback
+            const btn = document.querySelector('.btn-capture');
+            const corners = document.querySelectorAll('.corner');
+
+            btn.innerHTML = "SCAN ACQUIRED [ OK ]";
+            btn.style.color = "#00f260";
+            btn.style.borderColor = "#00f260";
+            btn.style.background = "rgba(0, 242, 96, 0.1)";
+
+            const cornerArray = Array.from(corners); // convert NodeList to Array for forEach
+            cornerArray.forEach(c => c.style.borderColor = "#00f260"); // Turns green
+
+            setTimeout(() => {
+                btn.innerHTML = "RE-INITIALIZE SCAN";
+                btn.style.color = "";
+                btn.style.borderColor = "";
+                btn.style.background = "";
+                cornerArray.forEach(c => c.style.borderColor = "");
+            }, 3000);
+        }
+
+        function validateForm() {
+            const img = document.getElementById('eye_image').value;
+            if (!img) {
+                alert("ACCESS DENIED: Please initialize biometric scan sequence.");
+                return false;
+            }
+            return true;
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,114 @@
+[
+    {
+        "index": 1,
+        "voter_id": "cs388",
+        "candidate": "Candidate C",
+        "timestamp": 1770953180.5481722,
+        "previous_hash": "0",
+        "hash": "439babcf107b88d2ba973db585d27e7ffe1199b19ddeee20d8ace7cf9a5f5eb8"
+    },
+    {
+        "index": 2,
+        "voter_id": "cs089",
+        "candidate": "Candidate B",
+        "timestamp": 1770953342.4274685,
+        "previous_hash": "439babcf107b88d2ba973db585d27e7ffe1199b19ddeee20d8ace7cf9a5f5eb8",
+        "hash": "70e68a1f76d37946c0543c86b3927d0f422b49c3c8b50e6084e27ad06a1e27d3"
+    },
+    {
+        "index": 3,
+        "voter_id": "cs344",
+        "candidate": "Candidate B",
+        "timestamp": 1770996038.7530038,
+        "previous_hash": "70e68a1f76d37946c0543c86b3927d0f422b49c3c8b50e6084e27ad06a1e27d3",
+        "hash": "5efd68dc570a83398405c7e8e12e5669df69d124166b1f2bfc3b9353e07ad933"
+    },
+    {
+        "index": 4,
+        "voter_id": "cs333",
+        "candidate": "Candidate C",
+        "timestamp": 1770996099.852872,
+        "previous_hash": "5efd68dc570a83398405c7e8e12e5669df69d124166b1f2bfc3b9353e07ad933",
+        "hash": "d591dc630178b12c531dfe9d441de93048d8cd8f2a6da67f17eaf9d90010a1e2"
+    },
+    {
+        "index": 5,
+        "voter_id": "cs010",
+        "candidate": "Candidate B",
+        "timestamp": 1770996323.4365463,
+        "previous_hash": "d591dc630178b12c531dfe9d441de93048d8cd8f2a6da67f17eaf9d90010a1e2",
+        "hash": "c0361fa873e0adecc7ef30839e25c362385c33c025b8ea71aebb414e79b34d64"
+    },
+    {
+        "index": 6,
+        "voter_id": "cs310",
+        "candidate": "Candidate A",
+        "timestamp": 1770997125.499771,
+        "previous_hash": "c0361fa873e0adecc7ef30839e25c362385c33c025b8ea71aebb414e79b34d64",
+        "hash": "77c58072e3e3c66aea83601b80a9b2bb2b6d71cd6775d7de285583ff035baf05"
+    },
+    {
+        "index": 7,
+        "voter_id": "cs365",
+        "candidate": "Candidate A",
+        "timestamp": 1771044643.023514,
+        "previous_hash": "77c58072e3e3c66aea83601b80a9b2bb2b6d71cd6775d7de285583ff035baf05",
+        "hash": "75518ecbb937883dd3f97731534d957216d5bd2dd9960bb64d07d916c601dee0"
+    },
+    {
+        "index": 8,
+        "voter_id": "cs0123",
+        "candidate": "Candidate B",
+        "timestamp": 1771045754.743512,
+        "previous_hash": "75518ecbb937883dd3f97731534d957216d5bd2dd9960bb64d07d916c601dee0",
+        "hash": "e8a01cb27be9ce5241d7dbd1cb2f29e2e053c61e49b6c9ef15a70a7d7dbea007"
+    },
+    {
+        "index": 9,
+        "voter_id": "cs346",
+        "candidate": "Candidate C",
+        "timestamp": 1771084937.1250186,
+        "previous_hash": "e8a01cb27be9ce5241d7dbd1cb2f29e2e053c61e49b6c9ef15a70a7d7dbea007",
+        "hash": "c7523ce8abb525cb7c25606811ebef9298542b1abba6ef56f7ea06b7613fc93c"
+    },
+    {
+        "index": 10,
+        "voter_id": "cs143",
+        "candidate": "Candidate C",
+        "timestamp": 1771085085.288581,
+        "previous_hash": "c7523ce8abb525cb7c25606811ebef9298542b1abba6ef56f7ea06b7613fc93c",
+        "hash": "a868c56499da4a373fda2fc02c6d1f41795f82b8c823e9783813a82556378adc"
+    },
+    {
+        "index": 11,
+        "voter_id": "cs304",
+        "candidate": "Candidate B",
+        "timestamp": 1772078780.9554734,
+        "previous_hash": "a868c56499da4a373fda2fc02c6d1f41795f82b8c823e9783813a82556378adc",
+        "hash": "9d7c84829b8b4d6852677fdc1bce512ba4b8b727c18dce8f0b95b5c1ba556eaa"
+    },
+    {
+        "index": 12,
+        "voter_id": "cs037",
+        "candidate": "Candidate B",
+        "timestamp": 1772095508.4336104,
+        "previous_hash": "9d7c84829b8b4d6852677fdc1bce512ba4b8b727c18dce8f0b95b5c1ba556eaa",
+        "hash": "749836caec7fcdafdf46e6c211d0349d6d2fb1f6b4b8bf9d8a8b813efdea41ee"
+    },
+    {
+        "index": 13,
+        "voter_id": "cs065",
+        "candidate": "Candidate C",
+        "timestamp": 1772096304.874719,
+        "previous_hash": "749836caec7fcdafdf46e6c211d0349d6d2fb1f6b4b8bf9d8a8b813efdea41ee",
+        "hash": "34c9652a381e000245ca07f3f251e6035fcf16770e1cc59d5c378ad1c8c4dea6"
+    },
+    {
+        "index": 14,
+        "voter_id": "cs098",
+        "candidate": "Candidate B",
+        "timestamp": 1773038350.2833037,
+        "previous_hash": "34c9652a381e000245ca07f3f251e6035fcf16770e1cc59d5c378ad1c8c4dea6",
+        "hash": "8a092aaad9aa8edc321b998f2469989dc04f20b28b2ecf468967bf69389ce46c"
+    }
+]

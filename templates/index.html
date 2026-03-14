@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Eye Biometric Blockchain Voting</title>
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='logo.svg') }}">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            overflow: hidden;
+            /* Prevent scrollbars from canvas */
+            background-color: #0f0c29;
+            /* Fallback for canvas */
+            color: #fff;
+            height: 100vh;
+        }
+
+        #intro-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0f0c29;
+            z-index: 1000;
+            display: flex;
+            /* Restored for new Tech Runner intro */
+            /* ... rest of styles ... */
+        }
+
+        .company-name {
+            font-size: 4em;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            color: transparent;
+            -webkit-text-stroke: 2px #00f260;
+            position: relative;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* NEW LOGO STYLES */
+        .logo-spectacular {
+            filter: drop-shadow(0 0 15px #00f260) drop-shadow(0 0 30px #0575e6);
+            animation: pulseLogo 2s infinite alternate;
+        }
+
+        @keyframes pulseLogo {
+            0% {
+                transform: scale(1);
+                filter: drop-shadow(0 0 10px #00f260);
+            }
+
+            100% {
+                transform: scale(1.1);
+                filter: drop-shadow(0 0 25px #00f260) drop-shadow(0 0 50px #0575e6);
+            }
+        }
+
+        .company-name::before {
+            content: "YOU CAN TECHNOLOGIES";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 0;
+            height: 100%;
+            color: #00f260;
+            overflow: hidden;
+            border-right: 2px solid #00f260;
+            animation: fillText 3s linear forwards;
+        }
+
+        .tagline {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #0575e6;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 2.5s forwards;
+        }
+
+        /* Main Content - hidden initially or pushed down */
+        /* Main Content - Visible immediately */
+        .main-wrapper {
+            opacity: 1;
+            /* Was 0 */
+            transform: translateY(0);
+            /* Was 100px */
+            transition: none;
+            /* Removed entry animation */
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            /* Container holds Logo + Action Box */
+            /* Transparent to let logo float */
+            background: transparent;
+            padding: 0;
+            border: none;
+            box-shadow: none;
+            width: 800px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* NEW: Box specifically for the Registration/Voting buttons */
+        .action-box {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: 100%;
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+        }
+
+        #bgCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+        }
+
+        /* Animations */
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        @keyframes fillText {
+            0% {
+                width: 0;
+            }
+
+            100% {
+                width: 100%;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Helper classes for JS transitions */
+        .intro-exit {
+            transform: translateY(-100vh) scale(0.9);
+            /* Fly UP and away */
+            opacity: 0;
+        }
+
+        .content-enter {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Rest of existing styles */
+        .section {
+            flex: 1;
+            text-align: center;
+            padding: 20px;
+            /* Ensure sections take up width in the new flex row */
+        }
+
+        .divider {
+            width: 1px;
+            background: linear-gradient(to bottom, transparent, #00f260, transparent);
+            /* Divider is now vertical between columns */
+            margin: 0 10px;
+        }
+
+        h2 {
+            color: #00f260;
+            text-shadow: 0 0 10px rgba(0, 242, 96, 0.5);
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+
+        input {
+            margin: 10px 0;
+            padding: 12px;
+            width: 100%;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(0, 0, 0, 0.2);
+            color: #fff;
+            box-sizing: border-box;
+            transition: all 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #0575e6;
+            box-shadow: 0 0 10px rgba(5, 117, 230, 0.3);
+        }
+
+        button {
+            margin: 10px 0;
+            padding: 12px;
+            width: 100%;
+            border-radius: 6px;
+            box-sizing: border-box;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .btn-register {
+            background: linear-gradient(45deg, #0575e6, #021b79);
+            color: white;
+            border: none;
+            box-shadow: 0 5px 15px rgba(5, 117, 230, 0.4);
+        }
+
+        .btn-register:hover {
+            background: linear-gradient(45deg, #021b79, #0575e6);
+            box-shadow: 0 5px 20px rgba(5, 117, 230, 0.6);
+        }
+
+        .btn-login {
+            background: linear-gradient(45deg, #00f260, #0575e6);
+            color: white;
+            border: none;
+            box-shadow: 0 5px 15px rgba(0, 242, 96, 0.4);
+        }
+
+        .btn-login:hover {
+            background: linear-gradient(45deg, #0575e6, #00f260);
+            box-shadow: 0 5px 20px rgba(0, 242, 96, 0.6);
+        }
+
+        .admin-link {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            text-decoration: none;
+            color: #00f260;
+            font-size: 0.9em;
+            z-index: 20;
+            text-shadow: 0 0 5px rgba(0, 242, 96, 0.3);
+            transition: color 0.3s;
+        }
+
+        .admin-link:hover {
+            color: #fff;
+        }
+
+        .error {
+            color: #ff4b1f;
+            background: rgba(255, 75, 31, 0.1);
+            border: 1px solid rgba(255, 75, 31, 0.3);
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            text-align: center;
+            width: 100%;
+            backdrop-filter: blur(5px);
+        }
+
+        p {
+            color: #b3b3b3;
+            font-size: 0.9em;
+            margin-bottom: 20px;
+        }
+
+        ::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="bgCanvas"></canvas>
+
+    <!-- Intro Animation Overlay - HIDDEN/REMOVED -->
+    <div id="intro-overlay">
+        <canvas id="introCanvas"></canvas>
+    </div>
+
+    <div class="main-wrapper" id="main-content">
+        <!-- APP HEADER: LOGO & LOGIN -->
+        <div
+            style="position: absolute; top: 20px; left: 30px; z-index: 1000; display: flex; align-items: center; gap: 15px;">
+            <img src="{{ url_for('static', filename='logo.svg') }}" alt="YC Tech Logo"
+                style="width: 50px; filter: drop-shadow(0 0 5px #00f260);">
+            <div style="color: white; font-weight: bold; font-size: 1.2em; text-transform: uppercase;">You Can
+                Technologies</div>
+        </div>
+
+        <a href="/results" class="admin-link">Admin Dashboard</a>
+
+        <div style="position: absolute; top: 60px; width: 100%; text-align: center; z-index: 20;">
+            {% if error %}
+            <div class="error" style="width: 400px; margin: 0 auto; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">{{ error }}
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="container">
+            <!-- 1. Logo & Title (OUTSIDE the box, floating) -->
+            <img src="{{ url_for('static', filename='logo.svg') }}" alt="YC Tech Logo" class="logo-spectacular"
+                style="width: 250px; margin-bottom: 30px;">
+            <h1
+                style="margin: 0 0 40px 0; font-size: 2.8em; letter-spacing: 5px; text-transform: uppercase; color: white; text-shadow: 0 0 20px rgba(0,242,96,0.8);">
+                You Can Technologies</h1>
+
+            <!-- 2. Action Box (GLASS box containing buttons) -->
+            <div class="action-box">
+                <!-- Registration Section -->
+                <div class="section" style="max-width: 300px; text-align: center;">
+                    <h2>New Voter</h2>
+                    <p style="margin-bottom: 20px;">Initialize eye biometrics sequence.</p>
+                    <div style="margin-bottom: 20px;">
+                        <a href="{{ url_for('register_page') }}" style="text-decoration: none;">
+                            <button type="button" class="btn-register" style="width: 100%;">Launch Registration
+                                Station</button>
+                        </a>
+                    </div>
+                    <div style="font-size: 0.8em; color: rgba(255,255,255,0.6);">
+                        * REQUIRED: WEBCAM ACCESS
+                    </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <!-- Voting Section -->
+                <div class="section" style="max-width: 300px; text-align: center;">
+                    <h2>Cast Vote</h2>
+                    <p style="margin-bottom: 20px;">Authenticate via iris scan.</p>
+                    <div style="margin-bottom: 20px;">
+                        <a href="{{ url_for('login_page') }}" style="text-decoration: none;">
+                            <button type="button" class="btn-login" style="width: 100%;">Open Voting Terminal</button>
+                        </a>
+                    </div>
+                    <div style="font-size: 0.8em; color: rgba(255,255,255,0.6);">
+                        * REQUIRED: WEBCAM ACCESS
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="{{ url_for('static', filename='vote_bg.js') }}"></script>
+        <script src="{{ url_for('static', filename='intro.js') }}"></script>
+</body>
+
+</html>
