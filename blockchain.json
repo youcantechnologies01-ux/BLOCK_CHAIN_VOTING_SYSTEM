@@ -105,10 +105,10 @@
     },
     {
         "index": 14,
-        "voter_id": "cs098",
-        "candidate": "Candidate B",
-        "timestamp": 1773038350.2833037,
+        "voter_id": "cs003",
+        "candidate": "Candidate C",
+        "timestamp": 1773469253.1116946,
         "previous_hash": "34c9652a381e000245ca07f3f251e6035fcf16770e1cc59d5c378ad1c8c4dea6",
-        "hash": "8a092aaad9aa8edc321b998f2469989dc04f20b28b2ecf468967bf69389ce46c"
+        "hash": "033fae6531f07fb0cf4b329bda485ab44c47ffd4a8d9e1663ee4bb113ac7933f"
     }
 ]

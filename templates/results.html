@@ -2,6 +2,8 @@
 <html>
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Election Results & Blockchain Ledger</title>
     <style>
         body {
@@ -11,7 +13,9 @@
             color: #fff;
             margin: 0;
             overflow-x: hidden;
-            padding: 40px;
+            overflow-y: auto;
+            padding: 40px 20px;
+            min-height: 100vh;
         }
 
         #bgCanvas {
@@ -112,6 +116,31 @@
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(255, 75, 43, 0.6);
         }
+
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 20px 10px;
+            }
+            .section {
+                padding: 15px;
+            }
+            th, td {
+                padding: 10px;
+                font-size: 0.9em;
+            }
+            h1 {
+                font-size: 1.5em;
+            }
+            h2 {
+                font-size: 1.2em;
+            }
+        }
     </style>
 </head>
 
@@ -122,18 +151,20 @@
         <div class="section">
             <h1>Final Vote Counts</h1>
             {% if vote_counts %}
-            <table>
-                <tr>
-                    <th>Candidate</th>
-                    <th>Total Votes</th>
-                </tr>
-                {% for row in vote_counts %}
-                <tr>
-                    <td>{{ row[0] }}</td>
-                    <td>{{ row[1] }}</td>
-                </tr>
-                {% endfor %}
-            </table>
+            <div class="table-responsive">
+                <table>
+                    <tr>
+                        <th>Candidate</th>
+                        <th>Total Votes</th>
+                    </tr>
+                    {% for row in vote_counts %}
+                    <tr>
+                        <td>{{ row[0] }}</td>
+                        <td>{{ row[1] }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
             {% else %}
             <p>No votes recorded yet.</p>
             {% endif %}
@@ -146,26 +177,28 @@
             </p>
 
             {% if chain %}
-            <table>
-                <tr>
-                    <th>Block Index</th>
-                    <th>Voter ID</th>
-                    <th>Vote</th>
-                    <th>Timestamp</th>
-                    <th>Previous Hash</th>
-                    <th>Current Hash</th>
-                </tr>
-                {% for block in chain %}
-                <tr>
-                    <td>#{{ block.index }}</td>
-                    <td>{{ block.voter_id }}</td>
-                    <td>{{ block.candidate }}</td>
-                    <td>{{ block.timestamp }}</td>
-                    <td class="hash-cell" title="{{ block.previous_hash }}">{{ block.previous_hash }}</td>
-                    <td class="hash-cell" title="{{ block.hash }}">{{ block.hash }}</td>
-                </tr>
-                {% endfor %}
-            </table>
+            <div class="table-responsive">
+                <table>
+                    <tr>
+                        <th>Block Index</th>
+                        <th>Voter ID</th>
+                        <th>Vote</th>
+                        <th>Timestamp</th>
+                        <th>Previous Hash</th>
+                        <th>Current Hash</th>
+                    </tr>
+                    {% for block in chain %}
+                    <tr>
+                        <td>#{{ block.index }}</td>
+                        <td>{{ block.voter_id }}</td>
+                        <td>{{ block.candidate }}</td>
+                        <td>{{ block.timestamp }}</td>
+                        <td class="hash-cell" title="{{ block.previous_hash }}">{{ block.previous_hash }}</td>
+                        <td class="hash-cell" title="{{ block.hash }}">{{ block.hash }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
             {% else %}
             <p>Blockchain is empty.</p>
             {% endif %}

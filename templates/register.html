@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Voter Registration / Eye Scan</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/style.css">
@@ -10,11 +11,12 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
-            overflow: hidden;
+            overflow-x: hidden;
+            overflow-y: auto;
             /* Prevent scrollbars from canvas */
             background-color: #0f0c29;
             color: #fff;
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -40,7 +42,9 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             text-align: center;
             max-width: 500px;
-            width: 100%;
+            width: 90%;
+            box-sizing: border-box;
+            margin-top: 80px;
         }
 
         h1 {
@@ -53,6 +57,7 @@
 
         .video-container {
             position: relative;
+            max-width: 100%;
             width: 400px;
             height: 300px;
             margin: 0 auto 20px auto;
@@ -126,6 +131,46 @@
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
         }
+
+        .app-header {
+            position: fixed;
+            top: 20px;
+            left: 30px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .app-header {
+                left: 50%;
+                transform: translateX(-50%);
+                width: 100%;
+                justify-content: center;
+                background: rgba(15, 12, 41, 0.8);
+                padding: 10px 0;
+                top: 0;
+            }
+            .card {
+                margin-top: 100px;
+                padding: 20px;
+            }
+            .video-container {
+                height: 250px;
+            }
+            h1 {
+                font-size: 1.2em;
+            }
+            button {
+                width: 100%;
+                margin: 5px 0;
+            }
+            input {
+                width: 100%;
+                box-sizing: border-box;
+            }
+        }
     </style>
 </head>
 
@@ -133,8 +178,8 @@
     <canvas id="bgCanvas"></canvas>
 
     <!-- APP HEADER: LOGO & TITLE -->
-    <div style="position: fixed; top: 20px; left: 30px; z-index: 1000; display: flex; align-items: center; gap: 15px;">
-        <img src="{{ url_for('static', filename='logo.svg') }}" alt="YC Tech Logo"
+    <div class="app-header">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="YC Tech Logo"
             style="width: 50px; filter: drop-shadow(0 0 5px #00f260);">
         <div style="color: white; font-weight: bold; font-size: 1.2em; text-transform: uppercase;">You Can Technologies
         </div>
